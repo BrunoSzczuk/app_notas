@@ -1,50 +1,52 @@
+import 'package:app_notas/datasources/models/base/base_model.dart';
 import 'package:app_notas/datasources/models/turma.dart';
 
-const alunoId = 'id';
-const alunoNome = 'nome';
-const alunoTurma = 'turma_id';
-const alunoTabela = 'TbAluno';
+class Aluno extends BaseModel<int?> {
+  static const Id = 'id';
+  static const Nome = 'nome';
+  static const Tabela = 'TbAluno';
 
-class Aluno {
-  int id;
+  @override
+  int? id;
   String nome;
-  Turma? turma;
 
-  Aluno({required this.id, required this.nome, this.turma});
+  Aluno({this.id, required this.nome});
 
   factory Aluno.fromMap(Map map) => Aluno(
-        id: map[alunoId],
-        nome: map[alunoNome],
-        turma: map[alunoTurma] != null ? Turma.fromMap(map[alunoTurma]) : null,
+        id: map[Id],
+        nome: map[Nome],
       );
 
+  @override
   Map<String, dynamic> toMap() => {
-        alunoId: id,
-        alunoNome: nome,
-        alunoTurma: turma,
+        Id: id,
+        Nome: nome,
       };
 }
 
-const alunoTurmaId = 'id';
-const alunoTurmaAlunoId = 'id_aluno';
-const alunoTurmaTurmaId = 'id_turma';
-
-class AlunoTurma {
-  int id;
+class AlunoTurma extends BaseModel<int?> {
+  static const Id = 'id';
+  static const AlunoId = 'id_aluno';
+  static const TurmaId = 'id_turma';
+  static const Tabela = 'TbAlunoTurma';
+  @override
+  int? id;
   Aluno aluno;
   Turma turma;
 
-  AlunoTurma({required this.id, required this.aluno, required this.turma});
 
+  AlunoTurma({this.id, required this.aluno, required this.turma});
+
+  @override
   Map<String, dynamic> toMap() => {
-        alunoTurmaId: id,
-        alunoTurmaAlunoId: aluno.toMap(),
-        alunoTurmaTurmaId: turma.toMap(),
+        Id: id,
+        AlunoId: aluno.toMap(),
+        TurmaId: turma.toMap(),
       };
 
   factory AlunoTurma.fromMap(Map map) => AlunoTurma(
-        id: map[alunoTurmaId],
-        aluno: Aluno.fromMap(map[alunoTurmaAlunoId]),
-        turma: Turma.fromMap(map[alunoTurmaTurmaId]),
+        id: map[Id],
+        aluno: Aluno.fromMap(map[AlunoId]),
+        turma: Turma.fromMap(map[TurmaId]),
       );
 }

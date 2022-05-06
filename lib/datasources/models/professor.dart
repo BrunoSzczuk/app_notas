@@ -1,12 +1,18 @@
+import 'package:app_notas/datasources/models/base/base_model.dart';
+
 const professorId = 'id';
 const professorNome = 'nome';
 const professorTabela = 'TbProfessor';
 
-class Professor {
-  int id;
+class Professor extends BaseModel<int?> {
+  static const Id = 'id';
+  static const Nome = 'nome';
+  static const Tabela = 'TbProfessor';
+
+  int? id;
   String nome;
 
-  Professor({required this.id, required this.nome});
+  Professor({this.id, required this.nome});
 
   factory Professor.fromMap(Map map) => Professor(
         id: map[professorId],

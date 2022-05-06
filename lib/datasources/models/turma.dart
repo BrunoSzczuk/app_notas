@@ -1,20 +1,21 @@
-const turmaId = 'id';
-const turmaNome = 'nome';
-const turmaTabela = 'TbTurma';
+import 'package:app_notas/datasources/models/base/base_model.dart';
 
-class Turma {
-  int id;
+class Turma extends BaseModel<int?> {
+  int? id;
   String nome;
+  static const Id = 'id';
+  static const Nome = 'nome';
+  static const Tabela = 'TbTurma';
 
-  Turma({required this.id, required this.nome});
+  Turma({this.id, required this.nome});
 
   factory Turma.fromMap(Map map) => Turma(
-        id: map[turmaId],
-        nome: map[turmaNome],
+        id: map[Id],
+        nome: map[Nome],
       );
 
   Map<String, dynamic> toMap() => {
-        turmaId: id,
-        turmaNome: nome,
+        Id: id,
+        Nome: nome,
       };
 }
