@@ -22,6 +22,17 @@ class Aluno extends BaseModel<int?> {
         Id: id,
         Nome: nome,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Aluno &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          nome == other.nome;
+
+  @override
+  int get hashCode => id.hashCode ^ nome.hashCode;
 }
 
 class AlunoTurma extends BaseModel<int?> {
@@ -31,22 +42,19 @@ class AlunoTurma extends BaseModel<int?> {
   static const Tabela = 'TbAlunoTurma';
   @override
   int? id;
-  Aluno aluno;
-  Turma turma;
+  Aluno? aluno;
+  Turma? turma;
 
-
-  AlunoTurma({this.id, required this.aluno, required this.turma});
+  AlunoTurma({this.id, this.aluno, this.turma});
 
   @override
   Map<String, dynamic> toMap() => {
         Id: id,
-        AlunoId: aluno.toMap(),
-        TurmaId: turma.toMap(),
+        AlunoId: aluno?.id,
+        TurmaId: turma?.id,
       };
 
   factory AlunoTurma.fromMap(Map map) => AlunoTurma(
         id: map[Id],
-        aluno: Aluno.fromMap(map[AlunoId]),
-        turma: Turma.fromMap(map[TurmaId]),
       );
 }

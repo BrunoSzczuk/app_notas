@@ -18,4 +18,15 @@ class Turma extends BaseModel<int?> {
         Id: id,
         Nome: nome,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Turma &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          nome == other.nome;
+
+  @override
+  int get hashCode => id.hashCode ^ nome.hashCode;
 }

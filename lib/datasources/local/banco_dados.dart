@@ -1,6 +1,7 @@
 import 'package:app_notas/datasources/local/aluno_helper.dart';
 import 'package:app_notas/datasources/local/disciplina_helper.dart';
 import 'package:app_notas/datasources/local/professor_helper.dart';
+import 'package:app_notas/datasources/local/turma_helper.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -30,6 +31,7 @@ class BancoDados {
       await db.execute(AlunoTurmaHelper.sqlCreate);
       await db.execute(ProfessorHelper.sqlCreate);
       await db.execute(DisciplinaHelper.sqlCreate);
+      await db.execute(TurmaHelper.sqlCreate);
       await db.execute(DisciplinaTurmaHelper.sqlCreate);
     });
   }

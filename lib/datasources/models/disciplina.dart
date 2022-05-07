@@ -23,29 +23,39 @@ class Disciplina extends BaseModel<int?> {
         Nome: nome,
         ProfessorId: professor?.id,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Disciplina &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          nome == other.nome &&
+          professor == other.professor;
+
+  @override
+  int get hashCode => id.hashCode ^ nome.hashCode ^ professor.hashCode;
 }
 
 class DisciplinaTurma extends BaseModel<int?> {
   int? id;
-  Disciplina disciplina;
-  Turma turma;
+  Disciplina? disciplina;
+  Turma? turma;
 
   static const Id = 'id';
   static const DisciplinaId = 'id_disciplina';
   static const TurmaId = 'id_turma';
   static const Tabela = 'TbDisciplinaTurma';
 
-  DisciplinaTurma({this.id, required this.disciplina, required this.turma});
+  DisciplinaTurma({this.id, this.disciplina, this.turma});
 
   Map<String, dynamic> toMap() => {
-        TurmaId: id,
-        DisciplinaId: disciplina.toMap(),
-        TurmaId: turma.toMap(),
+        Id: id,
+        DisciplinaId: disciplina?.id,
+        TurmaId: turma?.id,
       };
 
   factory DisciplinaTurma.fromMap(Map map) => DisciplinaTurma(
         id: map[TurmaId],
-        disciplina: Disciplina.fromMap(map[DisciplinaId]),
-        turma: Turma.fromMap(map[TurmaId]),
       );
 }

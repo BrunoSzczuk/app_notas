@@ -117,7 +117,7 @@ abstract class BaseListPageState<X extends BaseListPage, T extends BaseModel,
           child: Row(
             children: [
               Text(
-                mostrarNome(dado),
+                textoDeExibicao(dado),
                 style: const TextStyle(fontSize: 28),
               ),
             ],
@@ -128,7 +128,7 @@ abstract class BaseListPageState<X extends BaseListPage, T extends BaseModel,
     );
   }
 
-  String mostrarNome(T dado);
+  String textoDeExibicao(T dado);
 
   CAD criarTelaCadastro(T? dado);
 }

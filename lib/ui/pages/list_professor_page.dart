@@ -17,7 +17,7 @@ class ListProfessorPageState
   ListProfessorPageState() : super(ProfessorHelper(), 'Lista de Professores');
 
   @override
-  String mostrarNome(Professor dado) => dado.nome;
+  String textoDeExibicao(Professor dado) => dado.nome;
 
   @override
   CadProfessorPage criarTelaCadastro(Professor? dado) =>

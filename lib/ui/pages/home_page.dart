@@ -1,8 +1,10 @@
 import 'package:app_notas/ui/pages/list_aluno_page.dart';
+import 'package:app_notas/ui/pages/list_aluno_turma_page.dart';
 import 'package:app_notas/ui/pages/list_disciplina_page.dart';
+import 'package:app_notas/ui/pages/list_disciplina_turma_page.dart';
 import 'package:app_notas/ui/pages/list_professor_page.dart';
+import 'package:app_notas/ui/pages/list_turma_page.dart';
 import 'package:flutter/material.dart';
-
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -36,7 +38,20 @@ class _HomePageState extends State<HomePage> {
                   _abrirTelaListaDisciplina(context);
                 }),
             ElevatedButton(
-                child: const Text("Cadastro de Turmas"), onPressed: () {}),
+                child: const Text("Lista de Turmas"),
+                onPressed: () {
+                  _abrirTelaListaTurma(context);
+                }),
+            ElevatedButton(
+                child: const Text("Aluno x Turma"),
+                onPressed: () {
+                  _abrirTelaListaAlunoTurma(context);
+                }),
+            ElevatedButton(
+                child: const Text("Disciplina x Turma"),
+                onPressed: () {
+                  _abrirTelaListaDisciplinaTurma(context);
+                }),
             ElevatedButton(
                 child: const Text("Lançamento de Notas"), onPressed: () {}),
             ElevatedButton(
@@ -61,5 +76,20 @@ class _HomePageState extends State<HomePage> {
   void _abrirTelaListaDisciplina(BuildContext context) {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => ListDisciplinaPage()));
+  }
+
+  void _abrirTelaListaTurma(BuildContext context) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => ListTurmaPage()));
+  }
+
+  void _abrirTelaListaAlunoTurma(BuildContext context) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => ListAlunoTurmaPage()));
+  }
+
+  void _abrirTelaListaDisciplinaTurma(BuildContext context) {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => ListDisciplinaTurmaPage()));
   }
 }

@@ -17,7 +17,7 @@ class ListDisciplinaPageState extends BaseListPageState<ListDisciplinaPage,
   ListDisciplinaPageState() : super(DisciplinaHelper(), 'Lista de Disciplinas');
 
   @override
-  String mostrarNome(Disciplina dado) => dado.nome ?? '';
+  String textoDeExibicao(Disciplina dado) => dado.nome ?? '';
 
   @override
   CadDisciplinaPage criarTelaCadastro(Disciplina? dado) =>

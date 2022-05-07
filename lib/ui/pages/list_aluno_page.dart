@@ -17,7 +17,7 @@ class ListAlunoPageState
   ListAlunoPageState() : super(AlunoHelper(), 'Lista de Alunos');
 
   @override
-  String mostrarNome(Aluno dado) => dado.nome;
+  String textoDeExibicao(Aluno dado) => dado.nome;
 
   @override
   CadAlunoPage criarTelaCadastro(Aluno? dado) =>

@@ -1,4 +1,5 @@
 import 'package:app_notas/datasources/local/base/base_helper.dart';
+import 'package:app_notas/datasources/local/turma_helper.dart';
 import 'package:app_notas/datasources/models/aluno.dart';
 import 'package:app_notas/datasources/models/turma.dart';
 
@@ -30,5 +31,10 @@ class AlunoTurmaHelper extends BaseHelper<AlunoTurma> {
   AlunoTurmaHelper() : super(AlunoTurma.Id);
 
   @override
-  convertFromMap(Map m) async => AlunoTurma.fromMap(m);
+  convertFromMap(Map m) async {
+    AlunoTurma alunoturma = AlunoTurma.fromMap(m);
+    alunoturma.aluno = await AlunoHelper().getById(m[AlunoTurma.AlunoId]);
+    alunoturma.turma = await TurmaHelper().getById(m[AlunoTurma.TurmaId]);
+    return alunoturma;
+  }
 }
