@@ -33,7 +33,7 @@ abstract class BaseHelper<T extends BaseModel> {
     List maps = await db.query(_tableName);
     List<T> lista = [];
     for (Map m in maps) {
-      lista.add(convertFromMap(m));
+      lista.add(await convertFromMap(m));
     }
     return lista;
   }
@@ -41,12 +41,12 @@ abstract class BaseHelper<T extends BaseModel> {
   Future<T?> getById(id) async {
     Database db = await BancoDados().db;
     List maps =
-        await db.query(_tableName, where: " '$id' = ?", whereArgs: [id]);
+        await db.query(_tableName, where: " $idColumn = ?", whereArgs: [id]);
     if (maps.isNotEmpty) {
       return convertFromMap(maps.first);
     }
     return null;
   }
 
-  T convertFromMap(Map<dynamic, dynamic> m);
+  Future<T> convertFromMap(Map<dynamic, dynamic> m);
 }

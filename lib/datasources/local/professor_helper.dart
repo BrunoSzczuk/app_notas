@@ -12,5 +12,5 @@ class ProfessorHelper extends BaseHelper<Professor> {
   ProfessorHelper() : super(Professor.Id);
 
   @override
-  convertFromMap(Map m) => Professor.fromMap(m);
+  convertFromMap(Map m) async => Professor.fromMap(m);
 }

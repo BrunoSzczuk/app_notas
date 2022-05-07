@@ -23,4 +23,15 @@ class Professor extends BaseModel<int?> {
         professorId: id,
         professorNome: nome,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Professor &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          nome == other.nome;
+
+  @override
+  int get hashCode => id.hashCode ^ nome.hashCode;
 }

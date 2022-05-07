@@ -4,25 +4,24 @@ import 'package:app_notas/datasources/models/turma.dart';
 
 class Disciplina extends BaseModel<int?> {
   int? id;
-  String nome;
-  Professor professor;
+  String? nome;
+  Professor? professor;
   static const Id = 'id';
   static const Nome = 'nome';
   static const ProfessorId = 'professor_id';
   static const Tabela = 'TbDisciplina';
 
-  Disciplina({this.id, required this.nome, required this.professor});
+  Disciplina({this.id,  this.nome,  this.professor});
 
   factory Disciplina.fromMap(Map map) => Disciplina(
         id: map[Id],
-        nome: map[Nome],
-        professor: Professor.fromMap(map[ProfessorId]),
+        nome: map[Nome]
       );
 
   Map<String, dynamic> toMap() => {
         Id: id,
         Nome: nome,
-
+        ProfessorId: professor?.id,
       };
 }
 

@@ -13,7 +13,7 @@ class AlunoHelper extends BaseHelper<Aluno> {
   AlunoHelper() : super(Aluno.Id);
 
   @override
-  convertFromMap(Map m) => Aluno.fromMap(m);
+  convertFromMap(Map m) async => Aluno.fromMap(m);
 }
 
 class AlunoTurmaHelper extends BaseHelper<AlunoTurma> {
@@ -30,5 +30,5 @@ class AlunoTurmaHelper extends BaseHelper<AlunoTurma> {
   AlunoTurmaHelper() : super(AlunoTurma.Id);
 
   @override
-  convertFromMap(Map m) => AlunoTurma.fromMap(m);
+  convertFromMap(Map m) async => AlunoTurma.fromMap(m);
 }

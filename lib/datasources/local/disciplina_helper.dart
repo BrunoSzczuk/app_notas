@@ -1,4 +1,5 @@
 import 'package:app_notas/datasources/local/base/base_helper.dart';
+import 'package:app_notas/datasources/local/professor_helper.dart';
 import 'package:app_notas/datasources/models/disciplina.dart';
 import 'package:app_notas/datasources/models/professor.dart';
 import 'package:app_notas/datasources/models/turma.dart';
@@ -16,7 +17,13 @@ class DisciplinaHelper extends BaseHelper<Disciplina> {
   DisciplinaHelper() : super(Disciplina.Id);
 
   @override
-  convertFromMap(Map m) => Disciplina.fromMap(m);
+  convertFromMap(Map m) async {
+    Disciplina disciplina =  Disciplina.fromMap(m);
+    Professor? professor =
+        await ProfessorHelper().getById(m[Disciplina.ProfessorId]);
+    disciplina.professor = professor;
+    return disciplina;
+  }
 }
 
 class DisciplinaTurmaHelper extends BaseHelper<DisciplinaTurma> {
@@ -32,5 +39,5 @@ class DisciplinaTurmaHelper extends BaseHelper<DisciplinaTurma> {
   ''';
 
   @override
-  convertFromMap(Map m) => DisciplinaTurma.fromMap(m);
+  convertFromMap(Map m) async=> DisciplinaTurma.fromMap(m);
 }
