@@ -1,7 +1,9 @@
+import 'package:app_notas/datasources/local/banco_dados.dart';
 import 'package:app_notas/datasources/local/base/base_helper.dart';
 import 'package:app_notas/datasources/local/turma_helper.dart';
 import 'package:app_notas/datasources/models/aluno.dart';
 import 'package:app_notas/datasources/models/turma.dart';
+import 'package:sqflite/sqflite.dart';
 
 class AlunoHelper extends BaseHelper<Aluno> {
   static const sqlCreate = '''
@@ -36,5 +38,19 @@ class AlunoTurmaHelper extends BaseHelper<AlunoTurma> {
     alunoturma.aluno = await AlunoHelper().getById(m[AlunoTurma.AlunoId]);
     alunoturma.turma = await TurmaHelper().getById(m[AlunoTurma.TurmaId]);
     return alunoturma;
+  }
+
+  Future<List<AlunoTurma>> findByTurma(Turma turma) async {
+    Database db = await BancoDados().db;
+    List<Map> maps = await db.query(AlunoTurma.Tabela,
+        where: '${AlunoTurma.TurmaId} = ?', whereArgs: [turma.id]);
+    List<AlunoTurma> retorno = [];
+    for (Map m in maps) {
+      AlunoTurma alunoTurma = AlunoTurma.fromMap(m);
+      alunoTurma.aluno = await AlunoHelper().getById(m[AlunoTurma.AlunoId]);
+      alunoTurma.turma = await TurmaHelper().getById(m[AlunoTurma.TurmaId]);
+      retorno.add(alunoTurma);
+    }
+    return retorno;
   }
 }

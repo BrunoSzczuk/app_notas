@@ -1,3 +1,5 @@
+import 'package:app_notas/datasources/models/frequencia_aluno.dart';
+import 'package:app_notas/ui/pages/cad_frequencia_aluno_page.dart';
 import 'package:app_notas/ui/pages/list_aluno_page.dart';
 import 'package:app_notas/ui/pages/list_aluno_turma_page.dart';
 import 'package:app_notas/ui/pages/list_disciplina_page.dart';
@@ -56,7 +58,9 @@ class _HomePageState extends State<HomePage> {
                 child: const Text("Lançamento de Notas"), onPressed: () {}),
             ElevatedButton(
                 child: const Text("Lançamento de Frequência"),
-                onPressed: () {}),
+                onPressed: () {
+                  _abrirTelaLancamentoDeFrequencia(context);
+                }),
             ElevatedButton(
                 child: const Text("Resultado Final"), onPressed: () {}),
           ],
@@ -91,5 +95,12 @@ class _HomePageState extends State<HomePage> {
   void _abrirTelaListaDisciplinaTurma(BuildContext context) {
     Navigator.push(context,
         MaterialPageRoute(builder: (context) => ListDisciplinaTurmaPage()));
+  }
+
+  void _abrirTelaLancamentoDeFrequencia(BuildContext context) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => CadFrequenciaAlunoPage(FrequenciaAluno())));
   }
 }

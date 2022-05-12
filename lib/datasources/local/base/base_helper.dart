@@ -24,8 +24,8 @@ abstract class BaseHelper<T extends BaseModel> {
 
   Future<int> delete(T objeto) async {
     Database db = await BancoDados().db;
-    return db.delete(_tableName,
-        where: " $idColumn = ?", whereArgs: [objeto.id]);
+    return db
+        .delete(_tableName, where: " $idColumn = ?", whereArgs: [objeto.id]);
   }
 
   Future<List<T>> getAll() async {
@@ -46,6 +46,15 @@ abstract class BaseHelper<T extends BaseModel> {
       return convertFromMap(maps.first);
     }
     return null;
+  }
+
+  Future<T> save(T objeto) async {
+    if (objeto.id == null) {
+      return await insert(objeto);
+    } else {
+      await update(objeto);
+      return objeto;
+    }
   }
 
   Future<T> convertFromMap(Map<dynamic, dynamic> m);

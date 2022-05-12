@@ -1,9 +1,10 @@
 import 'package:app_notas/datasources/local/aluno_helper.dart';
 import 'package:app_notas/datasources/local/disciplina_helper.dart';
+import 'package:app_notas/datasources/local/frequencia_aluno.dart';
 import 'package:app_notas/datasources/local/professor_helper.dart';
 import 'package:app_notas/datasources/local/turma_helper.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
 
 class BancoDados {
   static const String _nomeBanco = 'app_notas.db';
@@ -27,11 +28,12 @@ class BancoDados {
 
     return await openDatabase(pathDb, version: 1,
         onCreate: (Database db, int version) async {
-      await db.execute(AlunoHelper.sqlCreate);
+          await db.execute(AlunoHelper.sqlCreate);
       await db.execute(AlunoTurmaHelper.sqlCreate);
       await db.execute(ProfessorHelper.sqlCreate);
       await db.execute(DisciplinaHelper.sqlCreate);
       await db.execute(TurmaHelper.sqlCreate);
+      await db.execute(FrequenciaAlunoHelper.sqlCreate);
       await db.execute(DisciplinaTurmaHelper.sqlCreate);
     });
   }

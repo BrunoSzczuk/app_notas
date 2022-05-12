@@ -1,51 +1,61 @@
-
 import 'package:app_notas/datasources/models/aluno.dart';
+import 'package:app_notas/datasources/models/base/base_model.dart';
 import 'package:app_notas/datasources/models/disciplina.dart';
 import 'package:app_notas/datasources/models/turma.dart';
 
-const frequenciaAlunoId = 'id';
-const frequenciaAlunoData = 'data';
-const frequenciaAlunoAlunoId = 'id_aluno';
-const frequenciaAlunoTurmaId = 'id_turma';
-const frequenciaAlunoDisciplinaId = 'id_disciplina';
-const frequenciaAlunoFrequencia = 'frequencia';
-
-class FrequenciaAluno {
-  int id;
-  bool presente = false;
-  Aluno aluno;
-  Turma turma;
-  DateTime data;
-  Disciplina disciplina;
+class FrequenciaAluno extends BaseModel<int?> {
+  static const Id = 'id';
+  static const Data = 'data';
+  static const AlunoId = 'id_aluno';
+  static const TurmaId = 'id_turma';
+  static const DisciplinaId = 'id_disciplina';
+  static const Presente = 'presente';
+  static const Tabela = 'TbFrequenciaAluno';
+  @override
+  int? id;
+  bool? presente = false;
+  Aluno? aluno;
+  Turma? turma;
+  String? data;
+  Disciplina? disciplina;
 
   FrequenciaAluno({
-    required this.id,
-    required this.data,
-    required this.presente,
-    required this.aluno,
-    required this.turma,
-    required this.disciplina,
+    this.id,
+    this.data,
+    this.presente,
+    this.aluno,
+    this.turma,
+    this.disciplina,
   });
 
-  factory FrequenciaAluno.fromMap(Map<String, dynamic> json) {
+  factory FrequenciaAluno.fromMap(Map<dynamic, dynamic> json) {
     return FrequenciaAluno(
-      id: json[frequenciaAlunoId],
-      presente: json[frequenciaAlunoFrequencia],
-      aluno: Aluno.fromMap(json[frequenciaAlunoAlunoId]),
-      turma: Turma.fromMap(json[frequenciaAlunoTurmaId]),
-      disciplina: Disciplina.fromMap(json[frequenciaAlunoDisciplinaId]),
-      data: DateTime.parse(json[frequenciaAlunoData]),
+      id: json[AlunoId],
+      presente: json[Presente] == 1,
+      data: json[Data],
     );
   }
 
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is FrequenciaAluno &&
+          runtimeType == other.runtimeType &&
+          aluno == other.aluno &&
+          data == other.data &&
+          disciplina == other.disciplina;
+
+  @override
+  int get hashCode => aluno.hashCode ^ data.hashCode ^ disciplina.hashCode;
+
   Map<String, dynamic> toMap() {
     return {
-      frequenciaAlunoId: id, // int
-      frequenciaAlunoAlunoId: aluno.toMap(),
-      frequenciaAlunoTurmaId: turma.toMap(),
-      frequenciaAlunoDisciplinaId: disciplina.toMap(),
-      frequenciaAlunoFrequencia: presente, // float
-      frequenciaAlunoData: data.toString(), // string
+      Id: id, // int
+      AlunoId: aluno?.id,
+      TurmaId: turma?.id,
+      DisciplinaId: disciplina?.id,
+      Presente: presente, // bool
+      Data: data, // date
     };
   }
 }

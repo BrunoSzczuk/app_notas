@@ -38,7 +38,7 @@ abstract class BaseCadPageState<X extends BaseCadPage, T extends BaseModel,
           Visibility(
             child: ElevatedButton(
                 child: const Text('Excluir'), onPressed: excluir),
-            visible: widget.objeto != null,
+            visible: widget.objeto.id != null,
           ),
         ],
       ),
@@ -69,19 +69,13 @@ abstract class BaseCadPageState<X extends BaseCadPage, T extends BaseModel,
   void salvar() {
     if (validar()) {
       preSalvar();
-      if (widget.objeto.id != null) {
-        helper.update(widget.objeto as T);
-      } else {
-        helper.insert(widget.objeto as T);
-      }
+      helper.save(widget.objeto as T);
       Navigator.pop(context);
     }
   }
 
   void _confirmarExclusao() {
-    if (widget.objeto != null) {
-      helper.delete(widget.objeto as T);
-    }
+    helper.delete(widget.objeto as T);
     Navigator.pop(context);
     Navigator.pop(context);
   }
