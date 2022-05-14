@@ -3,6 +3,7 @@ import 'package:app_notas/datasources/models/professor.dart';
 import 'package:app_notas/datasources/models/turma.dart';
 
 class Disciplina extends BaseModel<int?> {
+  @override
   int? id;
   String? nome;
   Professor? professor;
@@ -14,24 +15,24 @@ class Disciplina extends BaseModel<int?> {
   Disciplina({this.id,  this.nome,  this.professor});
 
   factory Disciplina.fromMap(Map map) => Disciplina(
-        id: map[Id],
-        nome: map[Nome]
-      );
+      id: map[Id],
+      nome: map[Nome]
+  );
 
   Map<String, dynamic> toMap() => {
-        Id: id,
-        Nome: nome,
-        ProfessorId: professor?.id,
-      };
+    Id: id,
+    Nome: nome,
+    ProfessorId: professor?.id,
+  };
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is Disciplina &&
-          runtimeType == other.runtimeType &&
-          id == other.id &&
-          nome == other.nome &&
-          professor == other.professor;
+          other is Disciplina &&
+              runtimeType == other.runtimeType &&
+              id == other.id &&
+              nome == other.nome &&
+              professor == other.professor;
 
   @override
   int get hashCode => id.hashCode ^ nome.hashCode ^ professor.hashCode;

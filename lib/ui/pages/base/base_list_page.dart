@@ -20,27 +20,38 @@ abstract class BaseListPageState<X extends BaseListPage, T extends BaseModel,
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(title)),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () => _abrirTelaCadastro(null),
-      ),
-      body: FutureBuilder(
-        future: helper.getAll(),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-            case ConnectionState.waiting:
-              return const CircularProgressIndicator();
-            default:
-              if (snapshot.hasError) {
-                return Text('Erro: ${snapshot.error}');
-              }
-              return _criarLista(snapshot.data as List<T>);
-          }
-        },
-      ),
+      floatingActionButton: AbsorbPointer(
+          absorbing: floatingButtonEnabled(),
+          child: FloatingActionButton(
+            child: const Icon(Icons.add),
+            onPressed: () => _abrirTelaCadastro(null),
+          )),
+      body: ListView(children: [
+        ...widgets(),
+        FutureBuilder(
+          future: buscaDadosParaLista(),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+              case ConnectionState.waiting:
+                return const CircularProgressIndicator();
+              default:
+                if (snapshot.hasError) {
+                  return Text('Erro: ${snapshot.error}');
+                }
+                return _criarLista(snapshot.data as List<T>);
+            }
+          },
+        )
+      ]),
     );
   }
+
+  Future<List<T>> buscaDadosParaLista() => helper.getAll();
+
+  floatingButtonEnabled() => true;
+
+  slideEnabled() => true;
 
   void _abrirTelaCadastro(T? dado) async {
     await Navigator.push(
@@ -56,10 +67,13 @@ abstract class BaseListPageState<X extends BaseListPage, T extends BaseModel,
     return ListView.builder(
         padding: const EdgeInsets.all(4),
         itemCount: data.length,
+        shrinkWrap: true,
         itemBuilder: (context, index) {
           return Dismissible(
             key: UniqueKey(),
-            direction: DismissDirection.horizontal,
+            direction: slideEnabled()
+                ? DismissDirection.horizontal
+                : DismissDirection.none,
             child: _criarItemLista(data[index]),
             background: Container(
               alignment: const Alignment(-1, 0),
@@ -131,4 +145,6 @@ abstract class BaseListPageState<X extends BaseListPage, T extends BaseModel,
   String textoDeExibicao(T dado);
 
   CAD criarTelaCadastro(T? dado);
+
+  List<Widget> widgets() => [];
 }

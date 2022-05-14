@@ -1,7 +1,7 @@
 import 'package:app_notas/datasources/local/aluno_helper.dart';
 import 'package:app_notas/datasources/local/base/base_helper.dart';
 import 'package:app_notas/datasources/local/disciplina_helper.dart';
-import 'package:app_notas/datasources/local/frequencia_aluno.dart';
+import 'package:app_notas/datasources/local/frequencia_aluno_helper.dart';
 import 'package:app_notas/datasources/local/turma_helper.dart';
 import 'package:app_notas/datasources/models/aluno.dart';
 import 'package:app_notas/datasources/models/base/base_model.dart';
