@@ -30,8 +30,8 @@ class CadNotaAlunoState
       MensagemAlerta.alerta(context: context, texto: 'A Nota é obrigatória!');
       return false;
     }
-    int nota = int.parse(_notaController.text.toString());
-    if (nota < 0 || nota > 100) {
+    int? nota = int.tryParse(_notaController.text.toString());
+    if (nota == null || nota < 0 || nota > 100) {
       MensagemAlerta.alerta(
           context: context, texto: 'A Nota informada está incorreta!');
       return false;

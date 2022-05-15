@@ -64,4 +64,24 @@ class FrequenciaAlunoHelper extends BaseHelper<FrequenciaAluno> {
     }
     return retorno;
   }
+
+  Future<int> getByTurmaDisciplinaAlunoPresentes(
+      Turma turma, Disciplina disciplina, Aluno aluno) async {
+    Database db = await BancoDados().db;
+
+    List<Map> maps = await db.rawQuery(
+        'SELECT count(*) as count FROM ${FrequenciaAluno.Tabela} WHERE ${FrequenciaAluno.Presente} AND ${FrequenciaAluno.TurmaId} = ? AND ${FrequenciaAluno.DisciplinaId} = ? AND ${FrequenciaAluno.AlunoId} = ? ',
+        [turma.id, disciplina.id, aluno.id]);
+
+    return maps[0]['count'];
+  }
+
+  Future<int> getByTurmaDisciplina(Turma turma, Disciplina disciplina) async {
+    Database db = await BancoDados().db;
+    List<Map> maps = await db.rawQuery(
+        'SELECT count(*) as count FROM ${FrequenciaAluno.Tabela} WHERE ${FrequenciaAluno.TurmaId} = ? AND ${FrequenciaAluno.DisciplinaId} = ? group by ${FrequenciaAluno.AlunoId}',
+        [turma.id, disciplina.id]);
+
+    return maps[0]['count'];
+  }
 }

@@ -20,12 +20,12 @@ abstract class BaseListPageState<X extends BaseListPage, T extends BaseModel,
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(title)),
-      floatingActionButton: AbsorbPointer(
-          absorbing: floatingButtonEnabled(),
-          child: FloatingActionButton(
-            child: const Icon(Icons.add),
-            onPressed: () => _abrirTelaCadastro(null),
-          )),
+      floatingActionButton: !floatingButtonEnabled()
+          ? null
+          : FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () => _abrirTelaCadastro(null),
+      ),
       body: ListView(children: [
         ...widgets(),
         FutureBuilder(
@@ -52,6 +52,8 @@ abstract class BaseListPageState<X extends BaseListPage, T extends BaseModel,
   floatingButtonEnabled() => true;
 
   slideEnabled() => true;
+
+  tapEnabled() => true;
 
   void _abrirTelaCadastro(T? dado) async {
     await Navigator.push(
@@ -123,22 +125,39 @@ abstract class BaseListPageState<X extends BaseListPage, T extends BaseModel,
         });
   }
 
+  ListTile _criaListTileComSubtitle(T dado) =>
+      ListTile(
+        title: Text(textoDeExibicao(dado)),
+        subtitle: FutureBuilder<Widget?>(
+          future: subtitle(dado),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return snapshot.data!;
+            }
+            return const Text('');
+          },
+        ),
+      );
+
+  ListTile _criaListTileSemSubtitle(T dado) =>
+      ListTile(
+        title: Text(textoDeExibicao(dado)),
+      );
+
   Widget _criarItemLista(T dado) {
     return GestureDetector(
       child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            children: [
-              Text(
-                textoDeExibicao(dado),
-                style: const TextStyle(fontSize: 28),
-              ),
-            ],
-          ),
+        child: FutureBuilder<Widget?>(
+          future: subtitle(dado),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return _criaListTileComSubtitle(dado);
+            }
+            return _criaListTileSemSubtitle(dado);
+          },
         ),
       ),
-      onTap: () => _abrirTelaCadastro(dado),
+      onTap: () => tapEnabled() ? _abrirTelaCadastro(dado) : null,
     );
   }
 
@@ -147,4 +166,6 @@ abstract class BaseListPageState<X extends BaseListPage, T extends BaseModel,
   CAD criarTelaCadastro(T? dado);
 
   List<Widget> widgets() => [];
+
+  Future<Widget?> subtitle(T dado) async => null;
 }

@@ -61,4 +61,14 @@ class NotaAlunoHelper extends BaseHelper<NotaAluno> {
     }
     return retorno;
   }
+
+  getSomaDasNotasByTurmaDisciplinaAndAluno(
+      Turma turma, Disciplina disciplina, Aluno aluno) async {
+    Database db = await BancoDados().db;
+    List<Map> maps = await db.rawQuery(
+      'SELECT coalesce(sum(coalesce(${NotaAluno.Nota},0)),0) as nota FROM ${NotaAluno.Tabela} WHERE ${NotaAluno.TurmaId} = ? AND ${NotaAluno.DisciplinaId} = ? AND ${NotaAluno.AlunoId} = ?',
+      [turma.id, disciplina.id, aluno.id],
+    );
+    return maps[0]['nota'];
+  }
 }

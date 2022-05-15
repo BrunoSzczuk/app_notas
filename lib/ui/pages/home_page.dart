@@ -6,6 +6,7 @@ import 'package:app_notas/ui/pages/list_disciplina_page.dart';
 import 'package:app_notas/ui/pages/list_disciplina_turma_page.dart';
 import 'package:app_notas/ui/pages/list_nota_aluno_page.dart';
 import 'package:app_notas/ui/pages/list_professor_page.dart';
+import 'package:app_notas/ui/pages/list_resultado_page.dart';
 import 'package:app_notas/ui/pages/list_turma_page.dart';
 import 'package:flutter/material.dart';
 
@@ -66,7 +67,10 @@ class _HomePageState extends State<HomePage> {
                   _abrirTelaLancamentoDeFrequencia(context);
                 }),
             ElevatedButton(
-                child: const Text("Resultado Final"), onPressed: () {}),
+                child: const Text("Resultado Final"),
+                onPressed: () {
+                  _abrirTelaResultadoFinal(context);
+                }),
           ],
         ));
   }
@@ -106,6 +110,11 @@ class _HomePageState extends State<HomePage> {
         context,
         MaterialPageRoute(
             builder: (context) => CadFrequenciaAlunoPage(FrequenciaAluno())));
+  }
+
+  void _abrirTelaResultadoFinal(BuildContext context) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => ListResultadoPage()));
   }
 
   void _abrirTelaLancamentoDeNota(BuildContext context) {
